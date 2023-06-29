@@ -993,7 +993,7 @@ class Calibration_Diagnostics(Diagnostics_Html):
                                  color='red',
                                  horizontalalignment='left',
                                  verticalalignment='center')
-            except astropy.wcs._wcs.InvalidTransformError:
+            except wcs._wcs.InvalidTransformError:
                 logging.error('could not plot reference sources due to '
                               'astropy.wcs._wcs.InvalidTransformError; '
                               'most likely unknown distortion '
@@ -1319,6 +1319,8 @@ class Distill_Diagnostics(Diagnostics_Html):
                        'EQUINOX' in key:
                         hdulist[0].header[key] = float(val)
 
+                # drop PV header keywords
+                del hdulist[0].header["PV*"]
                 w = wcs.WCS(hdulist[0].header)
                 obj_x, obj_y = dat[11], dat[12]
                 image_coords = w.wcs_world2pix(np.array([[dat[1], dat[2]]]),
