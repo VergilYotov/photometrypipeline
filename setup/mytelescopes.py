@@ -75,10 +75,10 @@ schmidt_param = {
                       'DATE-OBS,TEL_KEYW'),
     #                        keywords to be copied in image
     #                        combination using swarp
-    'swarp-config-file': rootpath+'/setup/schmidt.swarp',
+    'swarp-config-file': rootpath + '/setup/schmidt.swarp',
 
     # default catalog settings
-    'astrometry_catalogs': ['GAIA'],
+    'astrometry_catalogs': ['GAIA', 'UCAC-4', '2MASS'],
     'photometry_catalogs': ['SDSS-R9', 'APASS9', 'PANSTARRS']
 }
 
