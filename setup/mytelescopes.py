@@ -78,7 +78,7 @@ schmidt_param = {
     'swarp-config-file': rootpath + '/setup/schmidt.swarp',
 
     # default catalog settings
-    'astrometry_catalogs': ['GAIA', 'UCAC-4', '2MASS'],
+    'astrometry_catalogs': ['SDSS-R9', 'GAIA', 'UCAC-4', '2MASS'],
     'photometry_catalogs': ['SDSS-R9', 'APASS9', 'PANSTARRS']
 }
 
