@@ -766,8 +766,12 @@ class catalog(object):
         # set other properties
         telescope = ''
         for line in hdulist[1].data[0][0]:
-            if telescope_keyword in line:
-                telescope = line.split('\'')[1]
+            if isinstance(line, bytes):
+                line_str = line.decode('utf-8')  # Decode bytes to string
+            else:
+                line_str = line  # Already a string
+            if telescope_keyword in line_str:
+                telescope = line_str.split('\'')[1]
         self.catalogname = filename
         if fits_filename is not None:
             self.origin = '{:s};{:s}'.format(telescope.strip(), fits_filename)
