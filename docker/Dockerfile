@@ -45,9 +45,9 @@ RUN cd /tmp && \
 RUN cd /home && git clone https://github.com/AsenAsenov1/photometrypipeline.git
 
 # Import files - requirements.txt / server.py / py_environment.sh
-COPY ./docker/requirements.txt /tmp/
-COPY ./docker/server.py /home/
-COPY ./docker/py_environment.sh /tmp
+COPY requirements.txt /tmp/
+COPY server.py /home/
+COPY py_environment.sh /tmp
 
 # Create Python virtual environment 
 RUN bash /tmp/py_environment.sh
