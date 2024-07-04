@@ -11,7 +11,7 @@ on:
 jobs:
   build-image:
     name: Build Image
-    runs-on: ubuntu-latest
+    runs-on: arm64v8/debian:bullseye  
     steps:
             
       - name: Login to Docker Hub
@@ -25,4 +25,4 @@ jobs:
         with:
           file: ./docker/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: asenasenov/photometrypipeline:latest
+          tags: asenasenov/photometry-arm64:latest
