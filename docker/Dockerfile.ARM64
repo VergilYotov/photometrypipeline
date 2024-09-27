@@ -1,0 +1,66 @@
+# Use a Debian base image for ARM architecture (Bullseye)
+FROM arm64v8/debian:bullseye
+
+# Set non-interactive mode for APT to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive \
+    PATH=$PATH:/home/pesho/photometrypipeline \
+    PHOTPIPEDIR=/home/pesho/photometrypipeline
+
+USER root
+
+# Create a non-root user
+RUN useradd -m pesho && \
+    chown -R pesho:pesho /home/pesho
+
+# Update package list and install the required packages
+RUN apt-get update && \
+    apt-get install -y software-properties-common \
+    curl \
+    wget \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    git \
+    libplplot-dev \
+    libshp-dev \
+    libcurl4-gnutls-dev \
+    liblapack3 \
+    liblapack-dev \
+    liblapacke \
+    liblapacke-dev \
+    libfftw3-3 \
+    libfftw3-dev \
+    libfftw3-single3 \
+    libatlas-base-dev \
+    scamp \
+    pip \
+    nano \
+    libcfitsio-dev \
+    python3.9-venv \
+    imagemagick && \
+    # Clean up to reduce image size
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tmp
+
+# Compile sextractor
+RUN git clone https://github.com/astromatic/sextractor.git && \
+    cd sextractor && \
+    sh autogen.sh && \
+    ./configure && \
+    make -j && \
+    make install
+
+
+# Set non-root user pesho
+USER pesho
+
+# Set up a working directory
+WORKDIR /home/pesho
+
+# Get python packages and PP binary
+RUN git clone https://github.com/AsenAsenov1/photometrypipeline.git && \
+    pip install -r photometrypipeline/docker/requirements.txt
+
+ENTRYPOINT ["/bin/bash", "-c", "sleep infinity"]

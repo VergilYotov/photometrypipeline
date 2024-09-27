@@ -1,0 +1,1 @@
+cd /home/ && python3 -m venv pp_env && source pp_env/bin/activate && pip install -r /tmp/requirements.txt
